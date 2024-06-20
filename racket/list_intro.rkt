@@ -20,8 +20,25 @@
 ;  cons?
 ;  (first number)
 ;  (rest list-of-numbers))
+;
 
-(define list-of-numbers (signature (mixed empty-list cons-list)))
+;; Eine nicht-leere Liste besteht aus
+;; - einem Element
+;; - einer weiteren Liste (der restlichen Elementen)
+(define-record (cons-list a)
+  cons
+  cons?
+  (first a)
+  (rest (list-of a)))
+
+
+(define list-of
+  (lambda (a)
+    (signature (mixed empty-list (cons-list a)))))
+
+
+
+(define list-of-numbers (signature (mixed empty-list (cons-list number))))
 
 ;;; ÜBUNG: Erstelle Listen:
 ;; []
@@ -40,8 +57,10 @@
                          (cons 3
                                (cons 4
                                      (cons 5 empty))))))
+
+
 ;;; Extrahiere 2. Element einer Liste
-(: second (list-of-numbers -> number))
+(: second ((list-of number) -> number))
 (check-expect (second lis2) 42)
 (check-expect (second lis4) 2)
 (define second
@@ -248,22 +267,4 @@
 (define neues-list-mult
   (lambda (liste)
     (fold liste * 1)))
-
-
-
-
-;; Eine nicht-leere Liste besteht aus
-;; - einer Zahl
-;; - einer weiteren Liste (der restlichen Zahlen)
-(define-record (cons-list a)
-  cons
-  cons?
-  (first a)
-  (rest (list-of a)))
-
-
-
-
-
-
 
