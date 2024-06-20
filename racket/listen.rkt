@@ -96,6 +96,77 @@
        (add-to-list (rev (rest liste))
                     (first liste))))))
 
+;;; Akkumulator benutzen:
+;; weiterer Parameter, der resultierende Liste aufbaut
+;(check-expect (rev (list 1 2 3 4)) (list 4 3 2 1))
+
+(define rev-1
+  (lambda (liste res)
+    (cond
+      ((empty? liste) res)
+      ((cons? liste)
+       (rev-1 (rest liste)
+              (cons (first liste) res))))))
+
+
+(define inc (lambda (x) (+ x 1)))
+
+(map inc (list 1 2 3 4))
+
+;; map endrekursiv mit Akkumulator
+
+(define map-1
+  (lambda (liste fn res)
+    (cond
+      ((empty? liste) (reverse res))
+      ((cons? liste)
+       (map-1 (rest liste) fn (cons (fn (first liste))
+                                    res))))))
+        
+;; Fakultätsfunktion:
+;; gegeben n >= 1: Berechne 1 * ... * n
+
+(: factorial (natural -> natural))
+(check-expect (factorial 1) 1)
+(check-expect (factorial 5) 120)
+(define factorial
+  (lambda (n)
+    (cond
+      ((= n 1) 1)
+      ((> n 1)
+       (* n
+          (factorial (- n 1)))))))
+
+(define second
+  (lambda (liste)
+    (first (rest liste))))
+
+;;; Schreibe Funktion, die n-tes Element aus Liste extrahiert
+(: nth ((list-of %a) natural -> %a))
+(check-expect (nth (list "A" "B" "C") 2) "B")
+(define nth
+  (lambda (liste n)
+    (cond
+      ((= n 1) (first liste))
+      ((> n 1)
+       (nth (rest liste) (- n 1))))))
+
+;;; QuickSort
+(: quicksort ((list-of number) -> (list-of number)))
+(check-expect (quicksort (list 5 2 8 3 7)) (list 2 3 5 7 8))
+(define quicksort
+  (lambda (liste)
+    (cond
+      ((empty? liste) empty)
+      ((cons? liste)
+       (define kleinere ...)
+       (define größere ...)
+       
+       ...
+       (first liste)
+       ...
+       (rest liste)
+       ...))))
 
 
 
