@@ -60,16 +60,44 @@
 ;; (: map ((%a -> %a) (list-of %a) -> (list-of %a)))
 
 ;; map-Signatur weiter erweitern
-;; (: map ((%a -> %a) (list-of %a) -> (list-of %a)))
+;; (: map ((%a -> %b) (list-of %a) -> (list-of %b)))
 (check-expect (words-length (list "Hallo" "du")) (list 5 2))
 (define words-length
   (lambda (liste)
     (map string-length liste)))
 
-
+;; filter-Signatur
+;; (: filter (... -> ...))
+;; Bsp.-Aufruf: (filter even? (list 1 2 3 4 5))
+;; (: filter ((%a -> boolean) (list-of %a) -> (list-of %a))
 
 
 
 ;;; (add-to-list (list 1 2 3) 4) -> (list 1 2 3 4)
+(: add-to-list ((list-of %a) %a -> (list-of %a)))
+(check-expect (add-to-list (list 1 2 3) 4) (list 1 2 3 4))
+(define add-to-list
+  (lambda (liste element)
+    (cond
+      ((empty? liste) (list element))
+      ((cons? liste)
+       (cons
+        (first liste)
+        (add-to-list (rest liste) element))))))
+
+;;; rev: Dreht eine Liste um
+(: rev ((list-of %a) -> (list-of %a)))
+(check-expect (rev (list 1 2 3 4)) (list 4 3 2 1))
+(define rev
+  (lambda (liste)
+    (cond
+      ((empty? liste) empty)
+      ((cons? liste)
+       (add-to-list
+       (rev (rest liste))
+       (first liste)))))
+
+
+
 
 
