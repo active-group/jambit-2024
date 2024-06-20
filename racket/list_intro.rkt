@@ -108,19 +108,71 @@
        (if (pos? (first liste))
            (cons (first liste) (positives (rest liste)))
            (positives (rest liste)))))))
-       
+
+(: pos? (number -> boolean))
 (define pos?
   (lambda (zahl)
     (> zahl 0)))
 
+(: filter (list-of-numbers (number -> boolean) -> list-of-numbers))
+(define filter
+  (lambda (liste predicate?)
+    (cond
+      ((empty? liste) empty)
+      ((cons? liste)
+       (if (predicate? (first liste))
+           (cons (first liste) (filter (rest liste) predicate?))
+           (filter (rest liste) predicate?))))))
+
+(define neues-evens
+  (lambda (liste)
+    (filter liste even?)))
+
+(define neues-positives
+  (lambda (liste)
+    (filter liste pos?)))
+
+(: do-operation ((number number -> number) number number -> number))
+(define do-operation
+  (lambda (op zahl1 zahl2)
+    (op zahl1 zahl2)))
+
+;; flip: Vertauscht Funktionsargumente!
+
+;; (flip - 2 3) -> 1
+;; (flip / 2 4) -> 2
+
+(define op-type (signature (number number -> number)))
+
+(: flip (op-type number number -> number))
+(check-expect (flip - 2 3) 1)
+(check-expect (flip / 2 4) 2)
+(define flip
+  (lambda (op zahl1 zahl2)
+    (op zahl2 zahl1)))
 
 
 
+;; ÜBUNG
+;; fn-after-fn: bekommt zwei einstellige Funktionen,
+;; die hintereinander auf eine Zahl angewandt werden
+;; (fn-after-fn inc double 3) -> 8
+;; (fn-after-fn double inc 3) -> 7
+
+(: inc (number -> number))
+(define inc
+  (lambda (zahl)
+    (+ 1 zahl)))
+
+(: double (number -> number))
+(define double
+  (lambda (zahl)
+    (* 2 zahl)))
 
 
-
-
-
+(: fn-after-fn ((number -> number) (number -> number) number -> number))
+(check-expect (fn-after-fn inc double 3) 8)
+(check-expect (fn-after-fn double inc 3) 7)
 
 
 
