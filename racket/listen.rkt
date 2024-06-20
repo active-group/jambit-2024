@@ -95,7 +95,7 @@
       ((cons? liste)
        (add-to-list
        (rev (rest liste))
-       (first liste)))))
+       (first liste))))))
 
 
 
