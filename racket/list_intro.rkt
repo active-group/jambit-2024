@@ -15,11 +15,11 @@
 ;; Eine nicht-leere Liste besteht aus
 ;; - einer Zahl
 ;; - einer weiteren Liste (der restlichen Zahlen)
-(define-record cons-list
-  cons
-  cons?
-  (first number)
-  (rest list-of-numbers))
+;(define-record cons-list
+;  cons
+;  cons?
+;  (first number)
+;  (rest list-of-numbers))
 
 (define list-of-numbers (signature (mixed empty-list cons-list)))
 
@@ -238,10 +238,28 @@
       ((cons? liste)
        (op
         (first liste)
-        (fold (rest liste)))))))
+        (fold (rest liste) op e))))))
+
+(define neues-list-sum
+  (lambda (liste)
+    (fold liste + 0)))
+
+
+(define neues-list-mult
+  (lambda (liste)
+    (fold liste * 1)))
 
 
 
+
+;; Eine nicht-leere Liste besteht aus
+;; - einer Zahl
+;; - einer weiteren Liste (der restlichen Zahlen)
+(define-record (cons-list a)
+  cons
+  cons?
+  (first a)
+  (rest (list-of a)))
 
 
 
