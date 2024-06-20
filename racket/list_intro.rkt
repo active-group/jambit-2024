@@ -55,7 +55,87 @@
 (check-expect (list-sum lis4) 15)
 (define list-sum
   (lambda (liste)
-    ...))
+    (cond
+      ((empty? liste) 0)
+      ((cons? liste)
+       (+
+        (first liste)
+        (list-sum (rest liste)))))))
+
+;; Multipliziere alle Zahlen einer Liste
+
+(: list-mult (list-of-numbers -> number))
+(check-expect (list-mult lis1) 42)
+(check-expect (list-mult lis2) 966)
+(check-expect (list-mult lis4) 120)
+(check-expect (list-mult empty) 1)
+(define list-mult
+  (lambda (liste)
+    (cond
+      ((empty? liste) 1)
+      ((cons? liste)
+       (*
+        (first liste)
+        (list-mult (rest liste)))))))
+
+
+;; Aus einer Liste die geraden Zahlen extrahieren
+
+(: evens (list-of-numbers -> list-of-numbers))
+(check-expect (evens lis1) lis1)
+(check-expect (evens lis2) lis1)
+(check-expect (evens lis4) (cons 2 (cons 4 empty)))
+(define evens
+  (lambda (liste)
+    (cond
+      ((empty? liste) empty)
+      ((cons? liste)
+       (if (even? (first liste))
+           (cons (first liste) (evens (rest liste)))
+           (evens (rest liste)))))))
+
+;;; ÜBUNG: Funktion, die alle positiven Zahlen extrahiert!
+
+(: positives (list-of-numbers -> list-of-numbers))
+(check-expect (positives lis4) lis4)
+(check-expect (positives (cons -5 lis4)) lis4)
+(check-expect (positives (cons 25 (cons -2 empty))) (cons 25 empty))
+(define positives
+  (lambda (liste)
+    (cond
+      ((empty? liste) empty)
+      ((cons? liste)
+       (if (pos? (first liste))
+           (cons (first liste) (positives (rest liste)))
+           (positives (rest liste)))))))
+       
+(define pos?
+  (lambda (zahl)
+    (> zahl 0)))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     
+
+
+
+
+
+
+
+
+
 
 
 
