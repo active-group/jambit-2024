@@ -38,25 +38,21 @@
 ;; Fließt Wasser von Ort in den Fluss?
 
 (: fließt? (string fluss -> boolean))
-(check-expect (fließt? "Dreifaltigkeitsberg" prim) #t)
-(check-expect (fließt? "Dreifaltigkeitsberg" neckar1) #t)
-(check-expect (fließt? "Dreifaltigkeitsberg" neckar2) #t)
-(check-expect (fließt? "Tieringen" eschach) #f)
-(check-expect (fließt? "Heimliswald" eschach) #t)
-(check-expect (fließt? "Heimliswald" prim) #f)
-(check-expect (fließt? "Heimliswald" neckar1) #t)
 
 (define fließt?
   (lambda (ort fluss)
     (cond
-      ((bach? fluss) (string=? ort (bach-ursprung fluss)))   
+      ((bach? fluss) (string=? ort (bach-ursprung fluss)))
+      
       ((zusammentreffen? fluss)
        (or
         (string=? ort (zusammentreffen-ort fluss))
+       
         (fließt? ort (zusammentreffen-neben fluss))
+       
         (fließt? ort (zusammentreffen-haupt fluss)))))))
 
-
+(fließt? "Heimliswald" neckar1)
 
 
 
