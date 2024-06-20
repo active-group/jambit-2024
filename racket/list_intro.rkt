@@ -169,10 +169,16 @@
   (lambda (zahl)
     (* 2 zahl)))
 
+;; Signatur/Typ auch so möglich
+;; (define op1-type (signature (number -> number)))
+;; (: fn-after-fn (op1-type op1-type number -> number))
 
 (: fn-after-fn ((number -> number) (number -> number) number -> number))
 (check-expect (fn-after-fn inc double 3) 8)
 (check-expect (fn-after-fn double inc 3) 7)
+(define fn-after-fn
+  (lambda (fn1 fn2 zahl)
+    (fn2 (fn1 zahl))))
 
 
 
