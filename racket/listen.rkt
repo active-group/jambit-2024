@@ -15,11 +15,40 @@
               (cons "Hallo" empty))
 (define entferne-kurze-wörter
   (lambda (liste)
-    ...)
-
-
+    (filter (lambda (x) (> (string-length x) 4))
+            liste)))
 
 ;; Funktion setzt an jedes Wort einer Liste "!"
 ;; Hilfsfunktion: (string-append "Ha" "llo") -> "Hallo"
+(: add! ((list-of string) -> (list-of string)))
+(check-expect (add! (list "Hallo" "du")) (list "Hallo!" "du!"))
+(define add!
+  (lambda (liste)
+    (map (lambda (x) (string-append x "!"))
+         liste)))
+
+;; Funktion setzt an jedes Wort einer Liste "!!!"
+;; Hilfsfunktion: (string-append "Ha" "llo") -> "Hallo"
+(: add!!! ((list-of string) -> (list-of string)))
+(check-expect (add!!! (list "Hallo" "du")) (list "Hallo!!!" "du!!!"))
+(define add!!!
+  (lambda (liste)
+    (add! (add! (add! liste)))))
+
+;; Alle Wörter einer Liste zusammenschreiben als ein String
+;; Hinweis: Lösen mit fold: (fold 0 + (list 1 2 3 4))
+
+(: list->word ((list-of string) -> string))
+(check-expect (list->word (list "Hallo" "du")) "Hallodu")
+(define list->word
+  (lambda (liste)
+    (fold "" string-append liste)))
+
+;;; Zwei Listen aneinanderhängen
+(: concat ((list-of number) (list-of number) -> (list-of number)))
+(check-expect (concat (list 1 2 3) (list 4 5 6)) (list 1 2 3 4 5 6))
 
 
+
+
+     
