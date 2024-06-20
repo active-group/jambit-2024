@@ -10,13 +10,16 @@
 ;; Schreibe eine Funktion, die alle kurzen Wörter
 ;; aus einer Liste entfernt (<= 4 Buchstaben)
 ;; Hilfsfunktion: string-length
-(: entferne-kurze-wörter (... -> ...))
+(: entferne-kurze-wörter ((list-of string) -> (list-of string)))
 (check-expect (entferne-kurze-wörter (cons "Hallo" (cons "du" empty)))
               (cons "Hallo" empty))
+(define entferne-kurze-wörter
+  (lambda (liste)
+    ...)
+
+
 
 ;; Funktion setzt an jedes Wort einer Liste "!"
 ;; Hilfsfunktion: (string-append "Ha" "llo") -> "Hallo"
-(: add! (... -> ...))
-(check-expect (add! (list "Hallo" "du")) (list "Hallo!" "du!"))
 
 
