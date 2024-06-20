@@ -229,10 +229,16 @@
   (lambda (liste)
     (list-map liste (lambda (x) (+ 5 x)))))
 
-     
-
-
-
+    
+;; fold , oder reduce
+(define fold
+  (lambda (liste op e)
+    (cond
+      ((empty? liste) e); neutrale Element
+      ((cons? liste)
+       (op
+        (first liste)
+        (fold (rest liste)))))))
 
 
 
