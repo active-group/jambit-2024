@@ -94,8 +94,8 @@
       ((empty? liste) empty)
       ((cons? liste)
        (add-to-list
-       (rev (rest liste))
-       (first liste))))))
+        (rev (rest liste))
+        (first liste))))))
 
 
 
