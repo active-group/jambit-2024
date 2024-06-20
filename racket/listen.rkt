@@ -45,10 +45,31 @@
     (fold "" string-append liste)))
 
 ;;; Zwei Listen aneinanderhängen
-(: concat ((list-of number) (list-of number) -> (list-of number)))
+(: concat ((list-of %a) (list-of %a) -> (list-of %a)))
 (check-expect (concat (list 1 2 3) (list 4 5 6)) (list 1 2 3 4 5 6))
+(check-expect (concat (list "Hi" "du") (list "was" "geht")) (list "Hi" "du" "was" "geht"))
+(define concat
+  (lambda (liste1 liste2)
+    (cond
+      ((empty? liste1) liste2)
+      ((cons? liste1)
+       (cons (first liste1)
+             (concat (rest liste1) liste2))))))
+
+;; map-Signatur erweitert
+;; (: map ((%a -> %a) (list-of %a) -> (list-of %a)))
+
+;; map-Signatur weiter erweitern
+;; (: map ((%a -> %a) (list-of %a) -> (list-of %a)))
+(check-expect (words-length (list "Hallo" "du")) (list 5 2))
+(define words-length
+  (lambda (liste)
+    (map string-length liste)))
 
 
 
 
-     
+
+;;; (add-to-list (list 1 2 3) 4) -> (list 1 2 3 4)
+
+
