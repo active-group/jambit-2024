@@ -268,3 +268,4 @@
   (lambda (liste)
     (fold liste * 1)))
 
+
