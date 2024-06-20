@@ -183,29 +183,51 @@
 ;; ÜBUNG: Eine Funktion, die jedes Element einer Liste um 1 erhöht
 ;; [1 2 3 4] -> [2 3 4 5]
 ;; [3 7] -> [4 8]
-(: inc-list (... -> ...))
+(: inc-list (list-of-numbers -> list-of-numbers))
 (check-expect (inc-list lis1) (cons 43 empty))
 (check-expect (inc-list lis4) (cons 2 (cons 3 (cons 4 (cons 5 (cons 6 empty))))))
 (define inc-list
   (lambda (liste)
     (cond
-      ((empty? liste) ...)
-      ((cons? liste) ...))))
+      ((empty? liste) empty)
+      ((cons? liste)
+       (cons (inc (first liste))
+             (inc-list (rest liste)))))))
 
 
 ;; ÜBUNG: Eine Funktion, die jedes Element einer Liste verdoppelt erhöht
 ;; [1 2 3 4] -> [2 4 6 8]
 ;; [3 7] -> [6 14]
-(: double-list (... -> ...))
+(: double-list (list-of-numbers -> list-of-numbers))
 (check-expect (double-list lis1) (cons 84 empty))
 (check-expect (double-list lis4) (cons 2 (cons 4 (cons 6 (cons 8 (cons 10 empty))))))
 (define double-list
   (lambda (liste)
     (cond
-      ((empty? liste) ...)
-      ((cons? liste) ...))))
+      ((empty? liste) empty)
+      ((cons? liste)
+       (cons (double (first liste))
+             (double-list (rest liste)))))))
 
+(define list-map
+  (lambda (liste fn)
+    (cond
+      ((empty? liste) empty)
+      ((cons? liste)
+       (cons (fn (first liste))
+             (list-map (rest liste) fn))))))
 
+(define neues-inc-list
+  (lambda (liste)
+    (list-map liste inc)))
+
+(define neues-double-list
+  (lambda (liste)
+    (list-map liste double)))
+
+(define add-5-list
+  (lambda (liste)
+    (list-map liste (lambda (x) (+ 5 x)))))
 
      
 
