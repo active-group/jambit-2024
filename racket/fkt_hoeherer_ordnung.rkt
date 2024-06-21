@@ -12,13 +12,25 @@
     (f b a)))
 
 ;; flip vertauscht Argumente einer Funktion
-(: flip (... -> ...))
-(check-expect ...)
+(: flip ((%a %a -> %a) -> (%a %a -> %a)))
+;; (check-expect ...)
 (define flip
-  (lambda (...)
-    ...))
+  (lambda (f)
+    (lambda (a b)
+      (f b a))))
 
+;; Funktion, die eine beliebige Zahl auf jedes Listenelement addiert
+(: add-n ((list-of number) number -> (list-of number)))
+(check-expect (add-n (list 1 2 3) 5) (list 6 7 8))
+(check-expect (add-n (list 3) 7) (list 10))
+(define add-n
+  (lambda (liste n)
+    (map (lambda (element) (+ n element))
+         liste)))
 
-
-
-
+;; Funktion, die 5 auf jedes Listenelement addiert (benutze add-n)
+(: add-5 ((list-of number) -> (list-of number)))
+(check-expect (add-n (list 1 2 3) 5) (list 6 7 8))
+(define add-5
+  (lambda (liste)
+    (add-n liste 5)))
