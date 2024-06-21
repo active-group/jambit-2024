@@ -159,12 +159,16 @@
     (cond
       ((empty? liste) empty)
       ((cons? liste)
-       (define kleinere (filter (lambda (element) (< element (first liste))) liste))
-       (define größere (filter (lambda (element) (>= element (first liste))) liste))
+       (define kleinere (filter (lambda (element) (< element (first liste)))
+                                (rest liste)))
+       (define größere (filter (lambda (element) (>= element (first liste)))
+                               (rest liste)))
        (append
         (quicksort kleinere)
         (list (first liste))
         (quicksort größere))))))
+
+
 
 
 
