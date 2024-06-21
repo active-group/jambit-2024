@@ -34,3 +34,31 @@
 (define add-5
   (lambda (liste)
     (add-n liste 5)))
+
+
+
+;;; map via fold implementieren:
+
+(: my-fold (%res (%a %res -> %res) (list-of %a) -> %res))
+(check-expect (my-fold 0 + (list 1 2 3)) 6)
+(define my-fold
+  (lambda (e fn liste)
+    (cond
+      ((empty? liste) e)
+      ((cons? liste)
+       (fn (first liste) (my-fold e fn (rest liste)))))))
+
+(: my-map ((list-of %a) (%a -> %b) -> (list-of %b)))
+(check-expect (my-map (list 1 2 3 4) (lambda (x) (+ 1 x))) (list 2 3 4 5))
+(check-expect (my-map (list "A" "AA" "AAA" "A")
+                      (lambda (x) (string-length x)))
+              (list 1 2 3 1))
+
+(define my-map
+  (lambda (liste fn)
+    (fold empty
+          (lambda (element result)
+            (cons (fn element) result))
+          liste)))
+
+
